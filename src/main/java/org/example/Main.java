@@ -1,26 +1,17 @@
 package org.example;
 
-import java.util.*;
+import java.util.Arrays;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main
-{
-    public static void main(String[] args)
-    {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-       Scanner scanner = new Scanner(System.in);
-       String rua = "", numero;
-        while( !rua.equals("exit") )
-        {
-            System.out.println("Favor digitar o nome da rua:");
-            rua = scanner.next();
-            if(rua.equals("exit"))
-                System.exit(0);
-            System.out.println("Favor digitar o numero da rua:");
-            numero = scanner.next();
-            System.out.println(rua + "," + numero);
-        }
+public class Main {
+    public static void main(String[] args) {
+        String[] enderecos = new String[]{"Miritiba 339","Babaçu 500",
+                "Cambuí 804B","Rio Branco 23","Quirino dos Santos 23 b",
+                "4, Rue de la République","100 Broadway Av","Calle Sagasta, 26",
+                "Calle 44 No 1991"};
+
+        Arrays.asList(enderecos).forEach(e -> {
+            System.out.println(e);
+            System.out.println(AchaEndereco.resolveEndereco(e));
+        });
     }
 }
