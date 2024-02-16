@@ -4,7 +4,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 
-public class AchaEndereco {
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class AchaEndereco
+{
+    private static final String ADDRESS_PATTERN = "\\d+\\d+\\w|(No)+\\s+\\d+\\d|^\\d+|\\d+\\d+\\s+\\w+$|\\d+\\d+$";
 
     public static String resolveEndereco(String end) {
 
@@ -13,19 +19,19 @@ public class AchaEndereco {
 
         final Retorno ret = new Retorno();
 
-        final String[] parts = end.split("\\d+\\d+\\w|(No)+\\s+\\d+\\d|^\\d+|\\d+\\d+\\s+\\w+$|\\d+\\d+$");
+        final Pattern pattern = Pattern.compile(ADDRESS_PATTERN);
 
-        ret.setRua(parts[0].isBlank() ? parts[1].replace(",", "").trim() : parts[0].replace(",", "").trim());
-        ret.setNumero(end.replace(ret.getRua(), "").replace(",", "").trim());
+        final Matcher matcher = pattern.matcher(end);
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            return mapper.writeValueAsString(ret);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (matcher.find())
+        {
+            final String[] parts = end.split(ADDRESS_PATTERN);
+            ret.setRua(parts[0].isBlank() ? parts[1].replace(",", "").trim() : parts[0].replace(",", "").trim());
+            ret.setNumero(end.replace(ret.getRua(), "").replace(",", "").trim());
+            return ret.toString();
         }
-
+        else
+           return "Endereço não é válido";
     }
 
 }

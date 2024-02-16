@@ -5,9 +5,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Retorno {
+public class Retorno
+{
 
     private String rua = "";
     private String numero;
 
+    @Override
+    public String toString()
+    {
+        return "{\""+rua+"\", \""+numero+"\"}";
+    }
 }
